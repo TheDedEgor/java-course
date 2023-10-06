@@ -1,19 +1,23 @@
 package edu.hw1;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public final class Main {
     private final static Logger LOGGER = LogManager.getLogger();
+
+    private Main() {
+    }
 
     public static void helloWorldPrint() {
         LOGGER.info("Привет, мир!");
     }
 
+    @SuppressWarnings("MagicNumber")
     public static int minutesToSeconds(String time) {
         var nums = time.split(":");
         var minutes = Integer.parseInt(nums[0]);
@@ -24,13 +28,14 @@ public final class Main {
         return minutes * 60 + seconds;
     }
 
+    @SuppressWarnings("MagicNumber")
     public static int countDigits(int number) {
         int count = 0;
+        int num = number;
         do {
-            number /= 10;
+            num /= 10;
             count++;
-        }
-        while (number != 0);
+        } while (num != 0);
         return count;
     }
 
@@ -54,51 +59,58 @@ public final class Main {
         return result.toString();
     }
 
+    @SuppressWarnings("MagicNumber")
     private static boolean isPalindromeNumber(int number) {
-        var n = number;
+        var initial = number;
+        var num = initial;
         var rev = 0;
-        while (number > 0) {
-            var dig = number % 10;
+        while (num > 0) {
+            var dig = num % 10;
             rev = rev * 10 + dig;
-            number = number / 10;
+            num = num / 10;
         }
-        return n == rev;
+        return initial == rev;
     }
 
+    @SuppressWarnings("MagicNumber")
     public static boolean isPalindromeDescendant(int number) {
+        int n = number;
         do {
-            if (isPalindromeNumber(number)) {
+            if (isPalindromeNumber(n)) {
                 return true;
             }
             var num = 0;
             var deg = 1;
-            while (number > 0) {
-                var digit1 = number % 10;
-                var digit2 = number % 100 / 10;
+            while (n > 0) {
+                var digit1 = n % 10;
+                var digit2 = n % 100 / 10;
                 num = (digit1 + digit2) * deg + num;
-                number /= 100;
+                n /= 100;
                 deg *= 10;
             }
-            number = num;
-        }
-        while (String.valueOf(number).length() > 1);
+            n = num;
+        } while (String.valueOf(n).length() > 1);
 
         return false;
     }
 
+    @SuppressWarnings("MagicNumber")
     public static int countK(int number, int count) {
-        if (number == 6174) {
+        int n = number;
+        if (n == 6174) {
             return count;
         }
 
         List<Integer> digits = new ArrayList<>();
-        while (number > 0) {
-            var digit = number % 10;
+        while (n > 0) {
+            var digit = n % 10;
             digits.add(digit);
-            number /= 10;
+            n /= 10;
         }
         digits.sort(Comparator.naturalOrder());
-        int num1 = 0, num2 = 0, deg = 1;
+        int deg = 1;
+        int num1 = 0;
+        int num2 = 0;
         for (var digit : digits) {
             num1 = num1 * 10 + digit;
             num2 = digit * deg + num2;
@@ -109,23 +121,25 @@ public final class Main {
     }
 
     public static int rotateLeft(int n, int shift) {
+        int sh = shift;
         var bits = Integer.toBinaryString(n).toCharArray();
         int length = bits.length;
-        shift %= length;
+        sh %= length;
         var shiftBits = new char[length];
-        System.arraycopy(bits, shift, shiftBits, 0, length - shift);
-        System.arraycopy(bits, 0, shiftBits, length - shift, shift);
+        System.arraycopy(bits, sh, shiftBits, 0, length - sh);
+        System.arraycopy(bits, 0, shiftBits, length - sh, sh);
 
         return Integer.parseInt(new String(shiftBits), 2);
     }
 
     public static int rotateRight(int n, int shift) {
+        int sh = shift;
         var bits = Integer.toBinaryString(n).toCharArray();
         int length = bits.length;
-        shift %= length;
+        sh %= length;
         var shiftBits = new char[length];
-        System.arraycopy(bits, length - shift, shiftBits, 0, shift);
-        System.arraycopy(bits, 0, shiftBits, shift, length - shift);
+        System.arraycopy(bits, length - sh, shiftBits, 0, sh);
+        System.arraycopy(bits, 0, shiftBits, sh, length - sh);
 
         return Integer.parseInt(new String(shiftBits), 2);
     }
@@ -138,38 +152,51 @@ public final class Main {
         }
     }
 
+    @SuppressWarnings("MagicNumber")
     public static boolean knightBoardCapture(int[][] board) {
+        boolean result = true;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (board[i][j] == 1) {
                     if (checkPlace(i - 1, j - 2, board)) {
-                        return false;
+                        result = false;
+                        break;
                     }
                     if (checkPlace(i - 1, j + 2, board)) {
-                        return false;
+                        result = false;
+                        break;
                     }
                     if (checkPlace(i + 1, j - 2, board)) {
-                        return false;
+                        result = false;
+                        break;
                     }
                     if (checkPlace(i + 1, j + 2, board)) {
-                        return false;
+                        result = false;
+                        break;
                     }
                     if (checkPlace(i - 2, j - 1, board)) {
-                        return false;
+                        result = false;
+                        break;
                     }
                     if (checkPlace(i - 2, j + 1, board)) {
-                        return false;
+                        result = false;
+                        break;
                     }
                     if (checkPlace(i + 2, j - 1, board)) {
-                        return false;
+                        result = false;
+                        break;
                     }
                     if (checkPlace(i + 2, j + 1, board)) {
-                        return false;
+                        result = false;
+                        break;
                     }
                 }
             }
+            if (!result) {
+                break;
+            }
         }
-        return true;
+        return result;
     }
 
     public static void main(String[] args) {
