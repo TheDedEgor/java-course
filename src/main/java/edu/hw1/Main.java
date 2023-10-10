@@ -61,41 +61,40 @@ public final class Main {
 
     @SuppressWarnings("MagicNumber")
     private static boolean isPalindromeNumber(int number) {
-        var initial = number;
-        var num = initial;
+        var num = number;
         var rev = 0;
         while (num > 0) {
             var dig = num % 10;
             rev = rev * 10 + dig;
             num = num / 10;
         }
-        return initial == rev;
+        return number == rev;
     }
 
     @SuppressWarnings("MagicNumber")
     public static boolean isPalindromeDescendant(int number) {
-        int n = number;
+        int num = number;
         do {
-            if (isPalindromeNumber(n)) {
+            if (isPalindromeNumber(num)) {
                 return true;
             }
-            var num = 0;
+            var childNumber = 0;
             var deg = 1;
-            while (n > 0) {
-                var digit1 = n % 10;
-                var digit2 = n % 100 / 10;
-                num = (digit1 + digit2) * deg + num;
-                n /= 100;
+            while (num > 0) {
+                var lastDigit = num % 10;
+                var penultimateDigit = num % 100 / 10;
+                childNumber = (lastDigit + penultimateDigit) * deg + childNumber;
+                num /= 100;
                 deg *= 10;
             }
-            n = num;
-        } while (String.valueOf(n).length() > 1);
+            num = childNumber;
+        } while (String.valueOf(num).length() > 1);
 
         return false;
     }
 
     @SuppressWarnings("MagicNumber")
-    public static int countK(int number, int count) {
+    private static int countK(int number, int count) {
         int n = number;
         if (n == 6174) {
             return count;
@@ -118,6 +117,10 @@ public final class Main {
         }
 
         return countK(num2 - num1, count + 1);
+    }
+
+    public static int countK(int number) {
+        return countK(number, 0);
     }
 
     public static int rotateLeft(int n, int shift) {
