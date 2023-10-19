@@ -15,17 +15,17 @@ public final class PopularCommandExecutor {
 
     private void tryExecute(String command) {
 
-        Throwable error = null;
+        Throwable cause = null;
         for (int i = 0; i < maxAttempts; i++) {
             try (var conn = manager.getConnection()) {
                 conn.execute(command);
                 break;
             } catch (Throwable ex) {
-                error = ex;
+                cause = ex;
             }
         }
-        if (error != null) {
-            throw new ConnectionException("Ошибка при выполнении команды", error);
+        if (cause != null) {
+            throw new ConnectionException("Ошибка при выполнении команды", cause);
         }
     }
 }

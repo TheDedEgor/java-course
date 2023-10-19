@@ -12,33 +12,25 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class SquareAndRectangleTest {
     static Arguments[] rectangles() {
         return new Arguments[]{
-            Arguments.of(new Rectangle(20, 10)),
-            Arguments.of(new Square(10))
+            Arguments.of(new Rectangle()),
+            Arguments.of(new Square())
         };
-    }
-
-    @Test
-    @DisplayName("Проверка прямоугольника")
-    void rectangleTest() {
-        var rectangle = new Rectangle(20, 10);
-        var result = rectangle.area();
-        assertThat(result).isEqualTo(200);
-    }
-
-    @Test
-    @DisplayName("Проверка квадрата")
-    void squareTest() {
-        var rectangle = new Square(10);
-        var result = rectangle.area();
-        assertThat(result).isEqualTo(100);
     }
 
     @ParameterizedTest
     @MethodSource("rectangles")
-    @DisplayName("Проверка прямоугольника и квадрата")
+    @DisplayName("Проверка подстановки Лисков")
     void rectangleArea(Rectangle rect) {
-        var expected = rect.getHeight() * rect.getWidth();
-        var result = rect.area();
-        assertThat(result).isEqualTo(expected);
+        rect = rect.setWidth(20).setHeight(10);
+
+        assertThat(rect.area()).isEqualTo(200.0);
+    }
+    @Test
+    @DisplayName("Проверка квадрата")
+    void squareTest() {
+        Rectangle rect = new Square();
+        rect = rect.setWidth(10).setHeight(10);
+
+        assertThat(rect.area()).isEqualTo(100.0);
     }
 }
