@@ -1,51 +1,31 @@
 package edu.hw3;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class AtbashTest {
 
-    @Test
-    @DisplayName("Строка только в верхнем регистре")
-    void Test1() {
-        var result = Task1.atbash("ABC");
-        assertThat(result).isEqualTo("ZYX");
+    static List<Arguments> strings() {
+        return List.of(
+            Arguments.of("ABC", "ZYX"),
+            Arguments.of("abc", "zyx"),
+            Arguments.of("AbC", "ZyX"),
+            Arguments.of("Hello world!", "Svool dliow!"),
+            Arguments.of("Hello мир", "Svool мир"),
+            Arguments.of(
+                "Any fool can write code that a computer can understand. Good programmers write code that humans can understand. ― Martin Fowler",
+                "Zmb ullo xzm dirgv xlwv gszg z xlnkfgvi xzm fmwvihgzmw. Tllw kiltiznnvih dirgv xlwv gszg sfnzmh xzm fmwvihgzmw. ― Nzigrm Uldovi"
+            )
+        );
     }
 
-    @Test
-    @DisplayName("Строка только в нижнем регистре")
-    void Test2() {
-        var result = Task1.atbash("abc");
-        assertThat(result).isEqualTo("zyx");
+    @ParameterizedTest
+    @MethodSource("strings")
+    void variousStringsTest(String input, String expected) {
+        var result = Task1.atbash(input);
+        assertThat(result).isEqualTo(expected);
     }
-
-    @Test
-    @DisplayName("Строка с разным регистром")
-    void Test3() {
-        var result = Task1.atbash("AbC");
-        assertThat(result).isEqualTo("ZyX");
-    }
-
-    @Test
-    @DisplayName("Строка со спец. символами")
-    void Test4() {
-        var result = Task1.atbash("Hello world!");
-        assertThat(result).isEqualTo("Svool dliow!");
-    }
-
-    @Test
-    @DisplayName("Строка с русским алфавитом")
-    void Test5() {
-        var result = Task1.atbash("Hello мир");
-        assertThat(result).isEqualTo("Svool мир");
-    }
-
-    @Test
-    @DisplayName("Большая строка")
-    void Test6() {
-        var result = Task1.atbash("Any fool can write code that a computer can understand. Good programmers write code that humans can understand. ― Martin Fowler");
-        assertThat(result).isEqualTo("Zmb ullo xzm dirgv xlwv gszg z xlnkfgvi xzm fmwvihgzmw. Tllw kiltiznnvih dirgv xlwv gszg sfnzmh xzm fmwvihgzmw. ― Nzigrm Uldovi");
-    }
-
 }

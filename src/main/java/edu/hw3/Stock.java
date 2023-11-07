@@ -14,6 +14,6 @@ public class Stock implements Comparable<Stock> {
 
     @Override
     public int compareTo(@NotNull Stock o) {
-        return price.compareTo(o.price);
+        return o.price.compareTo(price);
     }
 }

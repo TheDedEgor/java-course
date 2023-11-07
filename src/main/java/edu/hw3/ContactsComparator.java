@@ -2,27 +2,13 @@ package edu.hw3;
 
 import java.util.Comparator;
 
-public class ContactsComparator implements Comparator<String> {
-
-    private final String sortDirection;
-
-    public ContactsComparator(String sortDirection) {
-        this.sortDirection = sortDirection;
-    }
+public class ContactsComparator implements Comparator<Person> {
 
     @Override
-    public int compare(String o1, String o2) {
-        var contact1 = o1.split(" ");
-        var contact2 = o2.split(" ");
-        int result;
-        if (contact1.length > 1 && contact2.length > 1) {
-            result = contact1[1].compareTo(contact2[1]);
-        } else {
-            result = contact1[0].compareTo(contact2[0]);
+    public int compare(Person p1, Person p2) {
+        if (!p1.getSurname().isEmpty() && !p2.getSurname().isEmpty()) {
+            return p1.getSurname().compareTo(p2.getSurname());
         }
-        if (sortDirection.equals("DESC")) {
-            result = -result;
-        }
-        return result;
+        return p1.getName().compareTo(p2.getName());
     }
 }

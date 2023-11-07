@@ -5,10 +5,12 @@ import java.util.TreeMap;
 @SuppressWarnings("MagicNumber")
 public class Task4 {
 
+    private static final TreeMap<Integer, String> MAP = createMap();
+
     private Task4() {
     }
 
-    public static String convertToRoman(Integer num) {
+    private static TreeMap<Integer, String> createMap() {
         var map = new TreeMap<Integer, String>();
         map.put(1000, "M");
         map.put(900, "CM");
@@ -23,12 +25,15 @@ public class Task4 {
         map.put(5, "V");
         map.put(4, "IV");
         map.put(1, "I");
+        return map;
+    }
 
+    public static String convertToRoman(Integer num) {
         var result = new StringBuilder();
         var number = num;
         while (number > 0) {
-            var digit = map.floorKey(number);
-            result.append(map.get(digit));
+            var digit = MAP.floorKey(number);
+            result.append(MAP.get(digit));
             number -= digit;
         }
 

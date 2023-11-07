@@ -9,7 +9,7 @@ public class ReverseIteratorTest {
 
     @Test
     @DisplayName("Список чисел")
-    void Test1() {
+    void listNumbersTest() {
         var iterator = new Task8<>(List.of(1, 2, 3));
         var expected = 3;
         while (iterator.hasNext()) {
@@ -20,7 +20,7 @@ public class ReverseIteratorTest {
 
     @Test
     @DisplayName("Список строк")
-    void Test2() {
+    void listStringsTest() {
         var list = List.of("Hello", "Hi", "Welcome");
         var iterator = new Task8<>(list);
         var idx = 2;
@@ -32,7 +32,7 @@ public class ReverseIteratorTest {
 
     @Test
     @DisplayName("Пустой список")
-    void Test3() {
+    void emptyListTest() {
         var iterator = new Task8<>(List.of());
         var result = iterator.hasNext();
         assertThat(result).isFalse();

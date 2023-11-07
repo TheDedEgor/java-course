@@ -9,7 +9,7 @@ public class TreeComparatorTest {
 
     @Test
     @DisplayName("Null нету")
-    void Test1() {
+    void notNullTest() {
         TreeMap<String, String> tree = new TreeMap<>(new Task7());
         tree.put("null", "test");
         assertThat(tree.containsKey(null)).isFalse();
@@ -17,9 +17,21 @@ public class TreeComparatorTest {
 
     @Test
     @DisplayName("Null есть")
-    void Test2() {
+    void NullTest() {
         TreeMap<String, String> tree = new TreeMap<>(new Task7());
         tree.put(null, "test");
         assertThat(tree.containsKey(null)).isTrue();
+    }
+
+    @Test
+    @DisplayName("Несколько null")
+    void twoNullTest() {
+        TreeMap<String, String> tree = new TreeMap<>(new Task7());
+        tree.put(null, "a");
+        tree.put("1", "a");
+        tree.put("2", "a");
+        tree.put(null, "b");
+        tree.put("3", "a");
+        assertThat(tree.get(null)).isEqualTo("b");
     }
 }

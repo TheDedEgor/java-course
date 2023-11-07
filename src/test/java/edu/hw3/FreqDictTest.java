@@ -1,51 +1,27 @@
 package edu.hw3;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import java.util.HashMap;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
+import java.util.Map;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class FreqDictTest {
 
-    @Test
-    @DisplayName("Частотный словарь строк 1")
-    void Test1() {
-        var result = Task3.freqDict(List.of("a", "bb", "a", "bb"));
-        var expected = new HashMap<Object, Integer>();
-        expected.put("a", 2);
-        expected.put("bb", 2);
-        assertThat(result).isEqualTo(expected);
+    static List<Arguments> dictionaries() {
+        return List.of(
+            Arguments.of(List.of("a", "bb", "a", "bb"), Map.of("a", 2L, "bb", 2L)),
+            Arguments.of(List.of("this", "and", "that", "and"), Map.of("this", 1L,"and", 2L,"that", 1L)),
+            Arguments.of(List.of("код", "код", "код", "bug"), Map.of("код", 3L, "bug", 1L)),
+            Arguments.of(List.of(1L, 1L, 2L, 2L), Map.of(1L, 2L, 2L, 2L))
+        );
     }
 
-    @Test
-    @DisplayName("Частотный словарь строк 2")
-    void Test2() {
-        var result = Task3.freqDict(List.of("this", "and", "that", "and"));
-        var expected = new HashMap<Object, Integer>();
-        expected.put("this", 1);
-        expected.put("and", 2);
-        expected.put("that", 1);
-        assertThat(result).isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("Частотный словарь строк 3")
-    void Test3() {
-        var result = Task3.freqDict(List.of("код", "код", "код", "bug"));
-        var expected = new HashMap<Object, Integer>();
-        expected.put("код", 3);
-        expected.put("bug", 1);
-        assertThat(result).isEqualTo(expected);
-    }
-
-    @Test
-    @DisplayName("Частотный словарь чисел")
-    void Test4() {
-        var result = Task3.freqDict(List.of(1, 1, 2, 2));
-        var expected = new HashMap<Object, Integer>();
-        expected.put(1, 2);
-        expected.put(2, 2);
+    @ParameterizedTest
+    @MethodSource("dictionaries")
+    void variousDictionariesTest(List<Object> input, Map<Object, Integer> expected) {
+        var result = Task3.freqDict(input);
         assertThat(result).isEqualTo(expected);
     }
 }

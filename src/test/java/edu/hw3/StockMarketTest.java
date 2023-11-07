@@ -8,7 +8,7 @@ public class StockMarketTest {
 
     @Test
     @DisplayName("Добавление акции")
-    void Test1() {
+    void addStockTest() {
         var stock = new Stock("Тинькоф", 500);
         var stockMarket = new Task6();
         stockMarket.add(stock);
@@ -17,7 +17,7 @@ public class StockMarketTest {
 
     @Test
     @DisplayName("Удаление акции")
-    void Test2() {
+    void deleteStockTest() {
         var stock1 = new Stock("Газпром", 100);
         var stock2 = new Stock("Сбербанк", 200);
         var stockMarket = new Task6();
@@ -30,7 +30,7 @@ public class StockMarketTest {
 
     @Test
     @DisplayName("Самая дорогая акция")
-    void Test3() {
+    void expensiveStockTest() {
         var stock1 = new Stock("Газпром", 100);
         var stock2 = new Stock("Сбербанк", 200);
         var stock3 = new Stock("Тинькоф", 500);
@@ -44,7 +44,7 @@ public class StockMarketTest {
 
     @Test
     @DisplayName("Самая дорогая акция после удаления")
-    void Test4() {
+    void expensiveStockAfterRemoveTest() {
         var stock1 = new Stock("Газпром", 100);
         var stock2 = new Stock("Сбербанк", 200);
         var stock3 = new Stock("Тинькоф", 500);

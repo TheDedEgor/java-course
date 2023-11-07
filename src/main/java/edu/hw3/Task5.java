@@ -1,5 +1,6 @@
 package edu.hw3;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class Task5 {
@@ -7,11 +8,14 @@ public class Task5 {
     private Task5() {
     }
 
-    public static List<Object> parseContacts(List<String> list, String sortDirection) {
+    public static List<Person> parseContacts(List<String> list, SortDirection sortDirection) {
         if (list == null) {
             return List.of();
         }
-        var comparator = new ContactsComparator(sortDirection);
-        return list.stream().sorted(comparator).map(item -> (Object) item).toList();
+        Comparator<Person> comparator = new ContactsComparator();
+        if (sortDirection.equals(SortDirection.DESC)) {
+            comparator = comparator.reversed();
+        }
+        return list.stream().map(Person::new).sorted(comparator).toList();
     }
 }
