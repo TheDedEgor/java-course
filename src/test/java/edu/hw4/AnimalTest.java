@@ -3,12 +3,14 @@ package edu.hw4;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class AnimalTest {
 
-    static List<Animal> getAnimals () {
+    static List<Animal> getAnimals() {
         var list = new ArrayList<Animal>();
         list.add(new Animal("Кошка", Animal.Type.CAT, Animal.Sex.F, 2, 30, 15, true));
         list.add(new Animal("Кот", Animal.Type.CAT, Animal.Sex.M, 5, 25, 20, true));
@@ -20,7 +22,7 @@ public class AnimalTest {
 
     @Test
     @DisplayName("Задача 1")
-    void Test1() {
+    void task1Test() {
         var task1 = new Task1(getAnimals());
         var list = task1.task1();
         for (int i = 0; i < list.size() - 1; i++) {
@@ -31,7 +33,7 @@ public class AnimalTest {
 
     @Test
     @DisplayName("Задача 2")
-    void Test2() {
+    void task2Test() {
         var task1 = new Task1(getAnimals());
         var list = task1.task2(2);
         assertThat(list.size()).isEqualTo(2);
@@ -43,10 +45,10 @@ public class AnimalTest {
 
     @Test
     @DisplayName("Задача 3")
-    void Test3() {
+    void task3Test() {
         var task1 = new Task1(getAnimals());
         var map = task1.task3();
-        for (var result: map.entrySet()) {
+        for (var result : map.entrySet()) {
             if (result.getKey() == Animal.Type.CAT) {
                 assertThat(result.getValue()).isEqualTo(2);
                 continue;
@@ -57,7 +59,7 @@ public class AnimalTest {
 
     @Test
     @DisplayName("Задача 4")
-    void Test4() {
+    void task4Test() {
         var task1 = new Task1(getAnimals());
         var animal = task1.task4();
         var result = animal.name();
@@ -66,7 +68,7 @@ public class AnimalTest {
 
     @Test
     @DisplayName("Задача 5")
-    void Test5() {
+    void task5Test() {
         var task1 = new Task1(getAnimals());
         var result = task1.task5();
         assertThat(result).isEqualTo(Animal.Sex.M);
@@ -74,19 +76,17 @@ public class AnimalTest {
 
     @Test
     @DisplayName("Задача 6")
-    void Test6() {
+    void task6Test() {
         var task1 = new Task1(getAnimals());
         var map = task1.task6();
-        for (var result: map.entrySet()) {
+        for (var result : map.entrySet()) {
             if (result.getKey() == Animal.Type.CAT) {
                 assertThat(result.getValue().age()).isEqualTo(5);
             } else if (result.getKey() == Animal.Type.DOG) {
                 assertThat(result.getValue().age()).isEqualTo(4);
-            }
-            else if (result.getKey() == Animal.Type.BIRD) {
+            } else if (result.getKey() == Animal.Type.BIRD) {
                 assertThat(result.getValue().age()).isEqualTo(1);
-            }
-            else {
+            } else {
                 assertThat(result.getValue().age()).isEqualTo(3);
             }
         }
@@ -94,7 +94,7 @@ public class AnimalTest {
 
     @Test
     @DisplayName("Задача 7")
-    void Test7() {
+    void task7Test() {
         var task1 = new Task1(getAnimals());
         var result = task1.task7(2);
         assertThat(result.type()).isEqualTo(Animal.Type.DOG);
@@ -102,7 +102,7 @@ public class AnimalTest {
 
     @Test
     @DisplayName("Задача 8")
-    void Test8() {
+    void task8Test() {
         var task1 = new Task1(getAnimals());
         var result = task1.task8(25);
         assertThat(result.get().type()).isEqualTo(Animal.Type.BIRD);
@@ -110,7 +110,7 @@ public class AnimalTest {
 
     @Test
     @DisplayName("Задача 9")
-    void Test9() {
+    void task9Test() {
         var task1 = new Task1(getAnimals());
         var result = task1.task9();
         assertThat(result).isEqualTo(14);
@@ -118,7 +118,7 @@ public class AnimalTest {
 
     @Test
     @DisplayName("Задача 10")
-    void Test10() {
+    void task10Test() {
         var task1 = new Task1(getAnimals());
         var result = task1.task10();
         var expected = getAnimals();
@@ -128,7 +128,7 @@ public class AnimalTest {
 
     @Test
     @DisplayName("Задача 11")
-    void Test11() {
+    void task11Test() {
         var task1 = new Task1(getAnimals());
         var result = task1.task11();
         assertThat(result).isEqualTo(List.of());
@@ -136,7 +136,7 @@ public class AnimalTest {
 
     @Test
     @DisplayName("Задача 12")
-    void Test12() {
+    void task12Test() {
         var task1 = new Task1(getAnimals());
         var result = task1.task12();
         assertThat(result).isEqualTo(0);
@@ -144,7 +144,7 @@ public class AnimalTest {
 
     @Test
     @DisplayName("Задача 13")
-    void Test13() {
+    void task13Test() {
         var task1 = new Task1(getAnimals());
         var result = task1.task13();
         assertThat(result).isEqualTo(List.of());
@@ -152,7 +152,7 @@ public class AnimalTest {
 
     @Test
     @DisplayName("Задача 14")
-    void Test14() {
+    void task14Test() {
         var task1 = new Task1(getAnimals());
         var result = task1.task14(30);
         assertThat(result).isTrue();
@@ -160,15 +160,16 @@ public class AnimalTest {
 
     @Test
     @DisplayName("Задача 15")
-    void Test15() {
+    void task15Test() {
         var task1 = new Task1(getAnimals());
         var result = task1.task15(0, 3);
-        assertThat(result).isEqualTo(22);
+        var expected = Map.of(Animal.Type.CAT, 15, Animal.Type.DOG, 0, Animal.Type.BIRD, 7, Animal.Type.FISH, 0);
+        assertThat(result).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("Задача 16")
-    void Test16() {
+    void task16Test() {
         var task1 = new Task1(getAnimals());
         var result = task1.task16();
         assertThat(result.get(0).name()).isEqualTo("Кот");
@@ -180,7 +181,7 @@ public class AnimalTest {
 
     @Test
     @DisplayName("Задача 17")
-    void Test17() {
+    void task17Test() {
         var task1 = new Task1(getAnimals());
         var result = task1.task17();
         assertThat(result).isFalse();
@@ -188,7 +189,7 @@ public class AnimalTest {
 
     @Test
     @DisplayName("Задача 18")
-    void Test18() {
+    void task18Test() {
         List<List<Animal>> list = new ArrayList<>();
         var list1 = new ArrayList<Animal>();
         list1.add(new Animal("Кошка", Animal.Type.CAT, Animal.Sex.F, 2, 30, 15, true));
@@ -206,7 +207,7 @@ public class AnimalTest {
 
     @Test
     @DisplayName("Задача 19")
-    void Test19() {
+    void task19Test() {
         var list = new ArrayList<Animal>();
         list.add(new Animal("Кошка", Animal.Type.CAT, Animal.Sex.F, -5, -30, 15, true));
         list.add(new Animal("Рыба", Animal.Type.FISH, Animal.Sex.M, 5, 25, -100, true));
@@ -218,7 +219,7 @@ public class AnimalTest {
 
     @Test
     @DisplayName("Задача 20")
-    void Test20() {
+    void task20Test() {
         var list = new ArrayList<Animal>();
         list.add(new Animal("Кошка", Animal.Type.CAT, Animal.Sex.F, -5, -30, 15, true));
         list.add(new Animal("Рыба", Animal.Type.FISH, Animal.Sex.M, 5, 25, -100, true));

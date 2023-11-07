@@ -34,8 +34,8 @@ public class Task1 {
     }
 
     public Map<Animal.Type, Long> task3() {
-       return animals.stream()
-           .collect(Collectors.groupingBy(Animal::type, Collectors.counting()));
+        return animals.stream()
+            .collect(Collectors.groupingBy(Animal::type, Collectors.counting()));
     }
 
     public Animal task4() {
@@ -48,9 +48,9 @@ public class Task1 {
         var map = animals.stream()
             .collect(Collectors.groupingBy(Animal::sex, Collectors.counting()));
         if (map.get(Animal.Sex.F) > map.get(Animal.Sex.M)) {
-            return  Animal.Sex.F;
+            return Animal.Sex.F;
         }
-        return  Animal.Sex.M;
+        return Animal.Sex.M;
     }
 
     public Map<Animal.Type, Animal> task6() {
@@ -75,8 +75,8 @@ public class Task1 {
 
     public Integer task9() {
         return animals.stream()
-            .map(Animal::paws)
-            .reduce(0, Integer::sum);
+            .mapToInt(Animal::paws)
+            .sum();
     }
 
     public List<Animal> task10() {
@@ -87,7 +87,7 @@ public class Task1 {
 
     public List<Animal> task11() {
         return animals.stream()
-            .filter(x ->  x.bites() && x.height() > 100)
+            .filter(x -> x.bites() && x.height() > 100)
             .toList();
     }
 
@@ -104,17 +104,16 @@ public class Task1 {
     }
 
     public Boolean task14(int k) {
-        var count = animals.stream()
-            .filter(x -> x.type() == Animal.Type.DOG && x.height() > k)
-            .count();
-        return count > 0;
+        return animals.stream()
+            .anyMatch(x -> x.type() == Animal.Type.DOG && x.height() > k);
     }
 
-    public Integer task15(int k, int l) {
+    public Map<Animal.Type, Integer> task15(int k, int l) {
         return animals.stream()
-            .filter(x -> k < x.age() && x.age() < l)
-            .map(Animal::weight)
-            .reduce(0, Integer::sum);
+            .collect(Collectors.groupingBy(
+                Animal::type,
+                Collectors.filtering(x -> k < x.age() && x.age() < l, Collectors.summingInt(Animal::weight))
+            ));
     }
 
     public List<Animal> task16() {
@@ -140,7 +139,20 @@ public class Task1 {
             .flatMap(Collection::stream)
             .filter(x -> x.type() == Animal.Type.FISH)
             .sorted(Comparator.comparing(Animal::weight).reversed())
-            .findFirst().get();
+            .findFirst().orElseThrow();
+    }
+
+    public Map<String, Set<ValidationError>> task19() {
+        return animals.stream()
+            .collect(Collectors.toMap(Animal::name, this::validateAnimal));
+    }
+
+    public Map<String, String> task20() {
+        var map = task19();
+        return map.entrySet().stream()
+            .collect(Collectors.toMap(Map.Entry::getKey, x -> x.getValue().stream()
+                .map(ValidationError::fieldName)
+                .collect(Collectors.joining(", "))));
     }
 
     private Set<ValidationError> validateAnimal(Animal animal) {
@@ -155,18 +167,5 @@ public class Task1 {
             result.add(new ValidationError("weight", "Вес меньше 0"));
         }
         return result;
-    }
-
-    public Map<String, Set<ValidationError>> task19() {
-        return animals.stream()
-            .collect(Collectors.toMap(Animal::name, this::validateAnimal));
-    }
-
-    public Map<String, String> task20() {
-        var map = task19();
-        return map.entrySet().stream()
-            .collect(Collectors.toMap(Map.Entry::getKey, x -> x.getValue().stream()
-                .map(ValidationError::fieldName)
-                .collect(Collectors.joining(", "))));
     }
 }
