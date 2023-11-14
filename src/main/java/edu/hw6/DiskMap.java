@@ -1,7 +1,5 @@
 package edu.hw6;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -10,6 +8,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class DiskMap implements Map<String, String> {
 
@@ -22,7 +22,6 @@ public class DiskMap implements Map<String, String> {
                 var nums = line.split(":");
                 data.put(nums[0], nums[1]);
             }
-            System.out.println(data);
         }
     }
 
