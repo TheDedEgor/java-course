@@ -10,6 +10,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Pattern;
 
 @SuppressWarnings("MagicNumber")
@@ -20,7 +21,7 @@ public class HomeWork5 {
 
     public static String averageTime(List<String> times) {
         var sumTime = Duration.ZERO;
-        for (var item: times) {
+        for (var item : times) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd, kk:mm");
             var time = item.split(" - ");
             var time1 = LocalDateTime.parse(time[0], formatter);
@@ -56,63 +57,47 @@ public class HomeWork5 {
     }
 
     public static boolean validatePassword(String password) {
-        var pattern = Pattern.compile(".*(~|!|@|#|\\$|%|\\^|&|\\*|\\|)+.*");
-        var matcher = pattern.matcher(password);
-        return matcher.find();
+        return Pattern.matches(".*(~|!|@|#|\\$|%|\\^|&|\\*|\\|)+.*", password);
     }
 
     public static boolean validateLicensePlate(String text) {
-        var pattern = Pattern.compile("^[АВЕКМНОРСТУХ]\\d{3}[АВЕКМНОРСТУХ]{2}\\d{2,3}$");
-        var matcher = pattern.matcher(text);
-        return matcher.find();
+        return Pattern.matches("^[АВЕКМНОРСТУХ]\\d{3}[АВЕКМНОРСТУХ]{2}\\d{2,3}$", text);
     }
 
     public static boolean subsequenceString(String substr, String text) {
-        var pattern = Pattern.compile(substr);
-        var matcher = pattern.matcher(text);
-        return matcher.find();
+        StringBuilder regex = new StringBuilder(".*");
+        for (var item : substr.toCharArray()) {
+            regex.append(item).append(".*");
+        }
+        return Pattern.matches(regex.toString(), text);
     }
 
     public static boolean task71(String text) {
-        var pattern = Pattern.compile("^[01]{2}0[01]*$");
-        var matcher = pattern.matcher(text);
-        return matcher.find();
+        return Pattern.matches("^[01]{2}0[01]*$", text);
     }
 
     public static boolean task72(String text) {
-        var pattern = Pattern.compile("^([01])[01]*\\1$|^[01]$");
-        var matcher = pattern.matcher(text);
-        return matcher.find();
+        return Pattern.matches("^([01])[01]*\\1$|^[01]$", text);
     }
 
     public static boolean task73(String text) {
-        var pattern = Pattern.compile("^[01]{1,3}$");
-        var matcher = pattern.matcher(text);
-        return matcher.find();
+        return Pattern.matches("^[01]{1,3}$", text);
     }
 
     public static boolean task81(String text) {
-        var pattern = Pattern.compile("^[01]([01][01])*$");
-        var matcher = pattern.matcher(text);
-        return matcher.find();
+        return Pattern.matches("^[01]([01][01])*$", text);
     }
 
     public static boolean task82(String text) {
-        var pattern = Pattern.compile("^0([01][01])*$|^1[01]([01][01])*$");
-        var matcher = pattern.matcher(text);
-        return matcher.find();
+        return Pattern.matches("^0([01][01])*$|^1[01]([01][01])*$", text);
     }
 
     public static boolean task83(String text) {
-        var pattern = Pattern.compile("^(1*01*01*0)*$");
-        var matcher = pattern.matcher(text);
-        return matcher.find();
+        return Pattern.matches("^(1*01*01*0)*$", text);
     }
 
     public static boolean task84(String text) {
-        var pattern = Pattern.compile("^(?!11$|111$)[01]*$");
-        var matcher = pattern.matcher(text);
-        return matcher.find();
+        return Pattern.matches("^(?!11$|111$)[01]*$", text);
     }
 
 }

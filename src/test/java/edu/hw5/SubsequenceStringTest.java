@@ -10,7 +10,7 @@ public class SubsequenceStringTest {
 
     static List<Arguments> strings() {
         return List.of(
-            Arguments.of("abc", "achfdbaabgabcaabg", true),
+            Arguments.of("abc", "achfdbaabgaabgc", true),
             Arguments.of("", "achfdbaabgabcaabg", true),
             Arguments.of("abch", "achfdbaabgabcaabg", false),
             Arguments.of(" ", "achfdbaabgabcaabg", false)
