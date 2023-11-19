@@ -5,6 +5,9 @@ import java.time.format.DateTimeFormatter;
 
 public final class CommandParser {
 
+    private CommandParser() {
+    }
+
     public static CommandParameters parseCommand(String[] args) {
         var path = findParameter("--path", args);
         if (path == null) {
@@ -20,14 +23,14 @@ public final class CommandParser {
         if (to != null) {
             toDate = LocalDate.parse(to, DateTimeFormatter.ISO_LOCAL_DATE);
         }
-        var format  = findParameter("--format", args);
+        var format = findParameter("--format", args);
         return new CommandParameters(path, fromDate, toDate, format);
     }
 
     private static String findParameter(String parameter, String[] args) {
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals(parameter)) {
-                return args[i+1];
+                return args[i + 1];
             }
         }
         return null;
