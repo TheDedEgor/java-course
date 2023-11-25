@@ -20,8 +20,8 @@ public class HomeWork5 {
 
     public static String averageTime(List<String> times) {
         var sumTime = Duration.ZERO;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd, kk:mm");
         for (var item : times) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd, kk:mm");
             var time = item.split(" - ");
             var time1 = LocalDateTime.parse(time[0], formatter);
             var time2 = LocalDateTime.parse(time[1], formatter);

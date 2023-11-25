@@ -38,7 +38,7 @@ public class DateParser6 extends DateParser {
             }
             return Optional.of(date);
         } catch (Exception ex) {
-            return runNextParser(text);
+            return Optional.empty();
         }
     }
 }
