@@ -2,6 +2,7 @@ package edu.hw6;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -45,10 +46,13 @@ public interface AbstractFilter extends DirectoryStream.Filter<Path> {
     }
 
     static AbstractFilter globMatches(String glob) {
-        return path -> path.getFileName().toString().matches("." + glob);
+        return path -> {
+            var pathMatcher = FileSystems.getDefault().getPathMatcher("glob:" + glob);
+            return pathMatcher.matches(path.getFileName());
+        };
     }
 
     static AbstractFilter regexContains(String regex) {
-        return path -> path.getFileName().toString().matches(".*" + regex + ".*");
+        return path -> path.getFileName().toString().matches(regex);
     }
 }

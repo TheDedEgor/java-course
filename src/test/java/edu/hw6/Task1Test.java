@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -44,6 +45,8 @@ public class Task1Test {
         diskMap.put("key2", "value2");
         assertThat(diskMap.get("key2")).isEqualTo("value2");
         diskMap.saveDataInFile(path);
+        var file = new File(path);
+        assertThat(file.exists()).isEqualTo(true);
         diskMap.loadDataFile(path);
         assertThat(diskMap.get("key2")).isEqualTo("value2");
     }
