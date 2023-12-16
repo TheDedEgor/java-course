@@ -6,7 +6,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class RandomObjectGeneratorTest {
 
     @Test
-    void randomObjectGeneratorTest1() {
+    void randomObjectGeneratorTest1() throws MyException {
         RandomObjectGenerator rog = new RandomObjectGenerator();
         var myClass = rog.nextObject(MyClass.class);
         assertThat(myClass).isNotNull();
@@ -15,14 +15,14 @@ public class RandomObjectGeneratorTest {
     }
 
     @Test
-    void randomObjectGeneratorTest2() {
+    void randomObjectGeneratorTest2() throws MyException {
         RandomObjectGenerator rog = new RandomObjectGenerator();
         var myRecord = rog.nextObject(MyRecord.class);
         assertThat(myRecord).isNotNull();
     }
 
     @Test
-    void randomObjectGeneratorTest3() {
+    void randomObjectGeneratorTest3() throws MyException {
         RandomObjectGenerator rog = new RandomObjectGenerator();
         var myClass = rog.nextObject(MyClass.class, "create");
         assertThat(myClass).isNotNull();

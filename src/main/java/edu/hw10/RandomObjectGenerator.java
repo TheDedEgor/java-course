@@ -10,7 +10,9 @@ import java.util.Random;
 
 public class RandomObjectGenerator {
 
-    public <T> T nextObject(Class<T> clazz, String factoryMethod) {
+    private static final String EXCEPTION_MSG = "Не удалось создать объект";
+
+    public <T> T nextObject(Class<T> clazz, String factoryMethod) throws MyException {
         try {
             var method = getFactoryMethod(clazz, factoryMethod);
             if (method.isPresent()) {
@@ -19,11 +21,11 @@ public class RandomObjectGenerator {
                 return nextObject(clazz);
             }
         } catch (Exception ex) {
-            return null;
+            throw new MyException(EXCEPTION_MSG);
         }
     }
 
-    public <T> T nextObject(Class<T> clazz) {
+    public <T> T nextObject(Class<T> clazz) throws MyException {
         try {
             var constructors = clazz.getDeclaredConstructors();
             var constructor =
@@ -31,7 +33,7 @@ public class RandomObjectGenerator {
                     .getLast();
             return createObject(constructor);
         } catch (Exception ex) {
-            return null;
+            throw new MyException(EXCEPTION_MSG);
         }
     }
 

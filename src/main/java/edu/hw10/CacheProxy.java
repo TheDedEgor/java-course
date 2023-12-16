@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.WeakHashMap;
 
 public class CacheProxy implements InvocationHandler {
 
@@ -16,7 +16,7 @@ public class CacheProxy implements InvocationHandler {
 
     private CacheProxy(Object target) {
         this.target = target;
-        this.cache = new ConcurrentHashMap<>();
+        this.cache = new WeakHashMap<>();
     }
 
     public static <T> T create(Object target, Class<T> interfaceClass) {
